@@ -1,45 +1,53 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 
 int main()
 {
-    char arr1[100];
-    char arr2[100];
-    printf("enter The First String:\n");
-    scanf("%s",arr1);
-    printf("enter The Second String:\n");
-    scanf("%s",arr2);
-    int i,j;
-    int temp = 0;
-    int flag = 0;
-    for(i = 0;i<strlen(arr2);i++)
+    char* arrb;
+    char* arrs;
+
+    arrb = (char*)calloc(1,sizeof(char));
+    arrs = (char*)calloc(1,sizeof(char));
+
+    printf("Enter Big String: \n");
+    scanf("%s",arrb);
+    printf("Enter Small String: \n");
+    scanf("%s",arrs);
+    
+    int i,j,x,temp;
+    temp = 0;
+    for(i = 0; i < (strlen(arrb) - strlen(arrs) + 1); i++)
     {
-        for(j=0;j<strlen(arr1);j++)
-        {
-            if(arr2[i] != arr1[j] )
-            {
-                continue;
-            }
-            else
+        if(arrb[i] == arrs[0])
+        {   
+            x = i;
+            for(j = 0;j<strlen(arrs);j++)
             {   
-                flag = i;
-                temp++;
-                i++;
+                if(temp == strlen(arrs))
+                {
+                    break;
+                }
+                if(arrs[j] == arrb[i])
+                {
+                    temp++;
+                    i++;
+                }
             }
-        }
-        if(temp == strlen(arr2))
-        {
-            break;
+            if(temp == strlen(arrs))
+                {
+                    break;
+                }
         }
     }
 
-    if(temp != strlen(arr2))
+    if(temp == strlen(arrs))
     {
-        printf("-1\n");
+        printf("%d",x);
     }
     else
     {
-        printf("%d\n",(strlen(arr2)-i));
+        printf("-1");
     }
     return 0;
 }
