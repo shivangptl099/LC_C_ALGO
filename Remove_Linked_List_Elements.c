@@ -7,12 +7,28 @@ struct node
     struct node* next;
 };
 
+struct node* Delete_Val_In_LL(struct node* ptr,int val)
+{
+    struct node* p = ptr;
+    struct node* q = ptr->next;
+    while(q->data!=val && q->next!=NULL)
+    {
+        p = p->next;
+        q = q->next;
+    }
+    if(q->data == val)
+    {
+    p->next = q->next;
+    free(q);
+    }
+    return ptr;
+}
+
 int main()
 {
-    int i,n,val;
+    int i,n,val,x;
     printf("Enter the No. Of Elements In Linked List: \n");
     scanf("%d",&n);
-
     struct node* head = NULL;
     struct node* temp = NULL;
     struct node* p = NULL;
@@ -50,29 +66,38 @@ int main()
     scanf("%d",&val);
 
     p = head;
-    q = head->next;
-
-    while(p->next!=NULL)
+    x = 0;
+    while(p!=NULL)
     {
-        while(q->data!=val)
+        if(p->data == val)
         {
-            p = p->next;
-            q = q->next;
-        }
-        if(q->data == val)
-        {
-        p->next = q->next;
-        free(q);
+            x++;
         }
         p = p->next;
     }
 
-    temp = head;
-    while(temp!=NULL)
+    if(n == x)
     {
-        printf("%d\t",temp->data);
-        temp = temp->next;
+        printf("Here Is The Answer Linked List...\n");
+        printf("[ ]");
+        return 0;
     }
+
+    for(i = 0;i<x;i++)
+    {
+    head = Delete_Val_In_LL(head,val);
+    }
+
+    printf("Here Is The Answer Linked List...\n");
+    printf("[ ");
+
+    p = head;
+    while(p!=NULL)
+    {
+        printf("%d ",p->data);
+        p = p->next;
+    }
+    printf("]");
 
     return 0;
 }
