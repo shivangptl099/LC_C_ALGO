@@ -4,9 +4,9 @@
 int main()
 {
     int i,m,n;
-    printf("m = ?\n");
+    printf("m = __ ?\n");
     scanf("%d",&m);
-    printf("n = ?\n");
+    printf("n = __ ?\n");
     scanf("%d",&n);
 
     int *nums1 = (int*)malloc(m*sizeof(int));
@@ -36,11 +36,32 @@ int main()
         nums3[i] = nums2[j];
         j++;
     }
-
+    int temp;
+    for(i = 0;i<(m + n)-1;i++)
+    {
+        for(j = i+1;j<(m+n);j++)
+        {
+            if(nums3[i] == nums3[j])
+            {
+                temp = nums3[j];
+                nums3[j] = nums3[i+1];
+                nums3[i+1] = temp;
+            }
+            else if(nums3[i] > nums3[j])
+            {
+                temp = nums3[j];
+                nums3[j] = nums3[i];
+                nums3[i] = temp;
+            }
+        }
+    }
+    printf("\n");
+    printf("[\t");
     for(i = 0;i<m+n;i++)
     {
         printf("%d\t",nums3[i]);
     }
+    printf("]");
 
     return 0;
 }
