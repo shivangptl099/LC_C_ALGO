@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 struct node
 {
     int data;
@@ -10,13 +9,14 @@ struct node
 
 int main()
 {
-    int i,n;
+    int i,j,n;
     printf("How Many Elements Are there In your Sorted Linked List: \n");
     scanf("%d",&n);
 
     struct node* head = NULL;
     struct node* temp = NULL;
     struct node* p = NULL;
+    struct node* q = NULL;
 
     for(i = 0;i<n;i++)
     {
@@ -45,17 +45,31 @@ int main()
         temp = temp->next;
     }
 
-    struct node* a = head;
-    struct node* b = head->next;
-    while(a->next!=NULL)
+    temp = head;
+    p = head->next;
+    while(p->next!=NULL)
     {
-        b = a->next;
-        if(a->data == b->data)
+        if(temp->data == p->data)
         {
-            a->next = b->next;
-            free(b);
+            q = temp->next;
+            temp->next = p->next;
+            free(q);
         }
-        a = a->next;
+        temp = temp->next;
+        p = temp->next;
+    }
+
+    temp = head;
+    p = head->next;
+    while(p->next!=NULL)
+    {
+        temp = temp->next;
+        p = p->next;
+    }
+    if(temp->data == p->data)
+    {
+        temp->next = NULL;
+        free(p);
     }
 
     p = head;
