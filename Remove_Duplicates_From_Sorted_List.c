@@ -7,20 +7,48 @@ struct node
     struct node* next;
 };
 
+struct node* DeleteDuplicatesLL(struct node* head)
+{
+    if(head == NULL)
+    {
+        return head;
+    }
+
+    struct node* temp;
+    struct node* p;
+    struct node* q;
+
+    temp = head;
+    p = head->next;
+
+    while(p!=NULL)
+    {
+        if(temp->data == p->data)
+        {   
+            q = p;
+            p = p->next;
+            temp->next = p;
+            free(q);
+        }
+        else
+        {
+            temp = p;
+            p = p->next;
+        }
+    }
+    return head;
+}
+
 int main()
 {
-    int i,j,n;
-    printf("How Many Elements Are there In your Sorted Linked List: \n");
-    scanf("%d",&n);
-
     struct node* head = NULL;
-    struct node* temp = NULL;
-    struct node* p = NULL;
-    struct node* q = NULL;
+    int i,n;
+    printf("Enter The No. Of Elements In Linked List: \n");
+    scanf("%d",&n);
 
     for(i = 0;i<n;i++)
     {
-        temp = (struct node*)calloc(1,sizeof(struct node));
+        struct node* temp = (struct node*)malloc(sizeof(struct node));
         temp->next = NULL;
         if(head == NULL)
         {
@@ -28,6 +56,7 @@ int main()
         }
         else
         {
+            struct node* p;
             p = head;
             while(p->next!=NULL)
             {
@@ -37,47 +66,22 @@ int main()
         }
     }
 
-    temp = head;
+    struct node* temp = head;
     for(i = 0;i<n;i++)
     {
-        printf("Enter The Element %d: \n",i+1);
+        printf("Enter Element %d: \n",i+1);
         scanf("%d",&temp->data);
         temp = temp->next;
     }
 
-    temp = head;
-    p = head->next;
-    while(p->next!=NULL)
-    {
-        if(temp->data == p->data)
-        {
-            q = temp->next;
-            temp->next = p->next;
-            free(q);
-        }
-        temp = temp->next;
-        p = temp->next;
-    }
+    head = DeleteDuplicatesLL(head);
 
+    printf("Here Is The Linked List Now...\n");
     temp = head;
-    p = head->next;
-    while(p->next!=NULL)
+    while(temp!=NULL)
     {
+        printf("%d\t",temp->data);
         temp = temp->next;
-        p = p->next;
     }
-    if(temp->data == p->data)
-    {
-        temp->next = NULL;
-        free(p);
-    }
-
-    p = head;
-    while(p!=NULL)
-    {
-        printf("%d\t",p->data);
-        p = p->next;
-    }
-   
     return 0;
 }
