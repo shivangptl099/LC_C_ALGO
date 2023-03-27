@@ -38,8 +38,6 @@ int main()
     int* arr2 = (int*)calloc(1,sizeof(int));
     int count = (sum == 0)?1:(log10(sum)+1);
     temp = sum;
-    // printf("%d\n",count);
-    // printf("The New Sum Is %d .\n",sum);
     for(i = count-1 ; i>=0;i--)
     {
         r = temp % 10;
@@ -53,6 +51,5 @@ int main()
     {
     printf("%d\t",arr2[i]);
     }
-    // printf("]");
     return 0;
 }
