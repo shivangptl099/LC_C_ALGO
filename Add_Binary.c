@@ -1,68 +1,72 @@
 #include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include<malloc.h>
+#include<string.h>
 
-int main()
-{
-    int b1,b2;
-    printf("Enter First Binary Number:\n");
-    scanf("%d",&b1);
-    printf("Enter Second Binary Number:\n");
-    scanf("%d",&b2);
-    int n1 = b1;
-    int n2 = b2;
-    int r = 0;
-    int *arr1 = (int*)calloc(1,sizeof(int));
-    int *arr2 = (int*)calloc(1,sizeof(int));
-    int count1 = (b1 == 0)?1:(log10(b1)+1);
-    int count2 = (b2 == 0)?1:(log10(b2)+1);
-    int i;
-    i = count1-1;
-    while(n1>0)
-    {
-        r = n1 % 10;
-        arr1[i] = r;
-        i--;
-        n1 = n1/10;
-    }
-    i = count2-1;
-    r = 0;
-    while(n2>0)
-    {
-        r = n2 % 10;
-        arr2[i] = r;
-        i--;
-        n2 = n2/10;
-    }
-    int ans;
-    int *arr3 = (int*)calloc(1,sizeof(int));
-    int z = 0;
-    int carry = 0;
-    i =0;
-    while(i<count1 || i<count2 || carry!=0)
-    {
-        int x =0;
-        if(i<count1 && arr1[count1-1-i] == 1)
+char * addBinary(char * a, char * b){
+    int len_a = strlen(a);
+    int len_b = strlen(b);
+    
+    int i = len_a - 1;
+    int j = len_b - 1;
+
+    int z = (len_a>len_b)?len_a:len_b;
+    char* arr = (char*)malloc((z+1)*sizeof(char));
+
+    int k = 0;
+    int sum,carry;
+    sum = 0;
+    carry = 0;
+    while(i>=0 || j>=0 || carry!=0)
+    {   
+        int x = 0;
+        if( i>=0 && a[i] == '1')
         {
             x = 1;
         }
-        int y =0;
-        if(i<count2 && arr1[count2-1-i] == 1)
+        int y = 0;
+        if(j>=0 && b[j] == '1')
         {
             y = 1;
         }
-
-        ans = (x+y+carry)%2;
-        arr3[z] = ans;
+        sum = (x+y+carry)%2;
         carry = (x+y+carry)/2;
-        z++;
-        i++;
-    }
 
-    for(i = z-1;i>=0;i--)
+        if(sum == 1)
+        {
+            arr[k] = '1'; 
+        }
+        else
+        {
+            arr[k] = '0';
+        }
+        i--;
+        j--;
+        k++;
+    }
+    char* arr_rev = (char*)malloc(k*sizeof(char));
+    j = 0;
+    for(i = k-1;i>=0;i--)
     {
-        printf("%d",arr3[i]);
+        arr_rev[j] = arr[i];
+        j++;
     }
+    return arr_rev;
+}
 
+int main()
+{   
+    char*a = (char*)malloc(sizeof(char));
+    char*b = (char*)malloc(sizeof(char));
+    printf("Enter First Binary Number:\n");
+    scanf("%s",a);
+    printf("Enter Second Binary Number:\n");
+    scanf("%s",b);
+    if(strlen(a) == 1 && strlen(b) == 1 && a[0] == '1' && b[0] == '1')
+    {
+        printf("10");
+        return 0;
+    }
+    char* arr = addBinary(a,b);
+    printf("%s",arr);
     return 0;
 }
