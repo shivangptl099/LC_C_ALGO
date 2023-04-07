@@ -4,6 +4,11 @@
 int addDigits(int num){
     int i,count,count1,temp,r,sum;
     temp = num;
+    count = (temp == 0)?1:(log10(temp)+1);
+    if(count == 1)
+    {
+        return temp;
+    }
     while(temp>0)
     {
         count = (temp == 0)?1:(log10(temp)+1);
@@ -29,5 +34,10 @@ int addDigits(int num){
 
 int main()
 {
+    int n;
+    printf("Enter The Number:\n");
+    scanf("%d",&n);
+    int ans = addDigits(n);
+    printf("The Answer After Adding All Digits Of Your Number To Get One Digit Is: %d \n",ans);
     return 0;
 }
