@@ -2,51 +2,38 @@
 #include<stdlib.h>
 #include<string.h>
 
-struct stack{
-    int size;
-    int top;
-    char* arr;
-};
-
 int isAnagram(char * s, char * t){
-    struct stack st;
-    st.top = -1;
-    st.size = strlen(s);
-    st.arr = (char*)calloc(10,sizeof(char));
-
-    int i = 0;
-    while(i<strlen(s))
+    if(strlen(s)!=strlen(t))
     {
-            st.arr[st.top] = s[i];
-            st.top++;
-            i++;
+        return 0;
     }
-    i = st.top;
-    int j = 0;
-    while(i>strlen(t))
+    int i,j,x;
+    x = 0;
+    for(i = 0;i<strlen(s);i++)
     {
         for(j = 0;j<strlen(t);j++)
         {
-            if(st.arr[i] != t[j])
-            {
-                return 0;
-            }
-            else
+            if(s[i] == t[j])
             {
                 t[j] = '_';
+                x++;
+                break;
             }
         }
-        i--;
+    }
+    if(x!=strlen(s))
+    {
+        return 0;
     }
     return 1;
 }
 
 int main()
 {
-    char* s;
+    char* s = (char*)malloc(sizeof(char));
     printf("Enter The First String:\n");
     gets(s);
-    char* t;
+    char* t = (char*)malloc(sizeof(char));
     printf("Enter The Second String:\n");
     gets(t);
     int x = isAnagram(s,t);
