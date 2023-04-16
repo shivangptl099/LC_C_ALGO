@@ -2,28 +2,28 @@
 #include<stdlib.h>
 
 int containsDuplicate(int* nums, int numsSize){
-    int i,j,x;
-    x = 0;
+    int i,j;
     for(i = 0;i<numsSize-1;i++)
     {
         for(j = i+1;j<numsSize;j++)
         {
-            if(nums[i] == nums[j])
+            if(nums[j]<nums[i])
             {
-                x++;
+                int temp = nums[j];
+                nums[j] = nums[i];
+                nums[i] = temp;
             }
-            if(x>=1)
-            {
-                x = 1;
-                break;
-            }
-        }
-        if(x == 1)
-        {
-            break;
         }
     }
-    return x;
+
+    for(i = 0;i<numsSize-1;i++)
+    {
+        if(nums[i] == nums[i+1])
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int main()
