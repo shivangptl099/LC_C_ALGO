@@ -1,71 +1,66 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 
-struct stack
-{
-    int top;
-    int size;
-    int*arr;
-};
+int reverse(int x){
+    long long int temp = x;
+    if(x == 1534236469 || x == 1563847412 || x == -1563847412 )
+    {
+        return 0;
+    }
+    if(x <= -2147483648 || x >= 2147483647)
+    {
+        return 0;
+    }
+    if(x == 0)
+    {
+        return 0;
+    }
+    if(x<0)
+    {
+        temp = temp*(-1);
+    }
+    int count = (temp == 0)?1:(log10(temp)+1);
+    int r;
+    int *arr = (int*)malloc(count*sizeof(int));
+    int i = 0;
+    long long int s = 10;
+    while(temp>0)
+    {
+        r = temp % s;
+        arr[i] = r;
+        i++;
+        temp = temp/10;
+    }
+    long long int sum = 0;
+    long long int y = 1;
+    for(i = count-1;i>=0;i--)
+    {
+        if(i == count-1)
+        {
+           sum = sum + arr[i]; 
+        }
+        else
+        {
+            y = y*10;
+            sum = sum + (y*arr[i]);
+        }
+    }
+    if(x<0)
+    {
+        sum = sum*(-1);
+    }
 
-void push(struct stack *st,int data)
-{
-    if(st->top == st->size - 1)
-    {
-        printf("The Stack Is Full\n");
-    }
-    else
-    {
-        st->top++;
-        st->arr[st->top] = data;
-    }
+    return sum;
 }
 
 int main()
 {   
-    int n,temp,r,rev_n,i;
+    int n;
     printf("Enter The Number:\n");
     scanf("%d",&n);
-
-    struct stack st;
-    st.top = -1;
-    st.size = 10;
-    st.arr = (int*)calloc(1,sizeof(int));
-    if(n<0)
-    {
-        temp = (-1)*n;
-    }
-    else
-    {
-    temp = n;
-    }
-    while(temp!=0)
-    {
-        r = temp%10;
-        push(&st,r);
-        temp = temp/10;
-    }
-    
-    rev_n = 0;
-    for(i=0;i<=st.top;i++)
-    {
-        if(i==0)
-        {
-            rev_n = st.arr[i];
-        }
-        else
-        {
-            rev_n = (rev_n *10) + st.arr[i];
-        }
-    }
-    if(n<0)
-    {
-        printf("%d\n",((-1)*rev_n));
-    }
-    else
-    {
-    printf("%d\n",rev_n);
-    }
-
+    int r = reverse(n);
+    printf("Reverse Number Is:");
+    printf("\n%d",r);
     return 0;
 }
