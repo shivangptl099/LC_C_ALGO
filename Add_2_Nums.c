@@ -2,78 +2,108 @@
 #include<stdlib.h>
 #include<math.h>
 
-struct node{
-    int data;
-    struct node* next;
+struct ListNode
+{
+    struct ListNode* next;
+    int val;
 };
 
-struct node* CreateLinkedList(int n){
-    struct node* head = NULL;
-    struct node* temp = NULL;
-    struct node* p = NULL;
-    int count = (n == 0)?1:(log10(n)+1);
-
-    for(int i=0;i<count;i++)
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    struct ListNode* temp = l1;
+    int p;
+    while(temp!=NULL)
     {
-        temp = (struct node*)calloc(1,sizeof(struct node));
-        temp->next = NULL;
-        if(head==NULL)
+        p++;
+        temp = temp->next;
+    }
+    int q;
+    temp = l2;
+    while(temp!=NULL)
+    {
+        q++;
+        temp = temp->next;
+    }
+    int i;
+    int* arr = (int*)malloc(p*sizeof(int));
+    temp = l1;
+    for(i = 0;i<p;i++)
+    {
+        arr[i] = temp->val;
+        temp = temp->next;
+    }
+    int sum1 = 0;
+    int x = 1;
+    for(i = p-1;i>=0;i--)
+    {
+        if(i == p-1)
         {
-            head = temp;
+            sum1 = sum1 + arr[i];
         }
         else
         {
-            p=head;
+            x = x*10;
+            sum1 = sum1 + (x*arr[i]);
+        }
+    }
+    free(arr);
+    temp = l2;
+    int* arr2 = (int*)malloc(q*sizeof(int));
+    for(i = 0;i<q;i++)
+    {
+        arr2[i] = temp->val;
+        temp = temp->next;
+    }
+    int sum2 = 0;
+    x = 1;
+    for(i = q-1;i>=0;i--)
+    {
+        if(i == q-1)
+        {
+            sum2 = sum2 + arr2[i];
+        }
+        else
+        {
+            x = x*10;
+            sum2 = sum2 + (x*arr2[i]);
+        }
+    }
+
+    int sum = sum1 + sum2;
+    int count = (sum == 0)?1:(log10(sum)+1);
+
+    struct ListNode* l3 = NULL;
+    l3->next = NULL;
+    for(i = 0;i<count;i++)
+    {
+        struct ListNode* temp = (struct ListNode*)malloc(1*sizeof(struct ListNode));
+        temp->next = NULL;
+        if(l3 == NULL)
+        {
+            l3 = temp;
+        }
+        else
+        {
+            struct ListNode* p = l3;
             while(p->next!=NULL)
             {
-                p=p->next;
+                p = p->next;
             }
             p->next = temp;
         }
     }
-    p = head;
-    while(p!=NULL)
+    temp = l3;
+    int r;
+    for(i = 0;i<count;i++)
     {
-        int r = n%10;
-        p->data = r;
-        n = n/10;
-        p = p->next;
+        r = sum%10;
+        temp->val = r;
+        sum = sum / 10;
+        temp = temp->next;
     }
-    return head;
-}
+    return l3;
+}   
 
-void LinkedListTraversal(struct node* ptr)
+int main()
 {
-    struct node* p;
-    p=(struct node*)calloc(1,sizeof(struct node));
-
-    p=ptr;
-    while(p!=NULL)
-    {
-        printf("%d\t",p->data);
-        p=p->next;
-    }
-}
-
-int main(){
-    int n1,n2,sum;
-    printf("Enter First Number:\n");
-    scanf("%d",&n1);
-    printf("Enter Second Number:\n");
-    scanf("%d",&n2);
-
-    sum = n1+n2;
-    struct node* head1 = CreateLinkedList(n1);
-    struct node* head2 = CreateLinkedList(n2);
-    struct node* head3 = CreateLinkedList(sum);
-
-    printf("The First Number In reverse is represented as Linked List Given Below:\n");
-    LinkedListTraversal(head1);
-    printf("\n");
-    printf("The Second Number In reverse is represented as Linked List Given Below:\n");
-    LinkedListTraversal(head2);
-    printf("\n");
-    printf("The Sum In reverse is represented as Linked List Given Below:\n");
-    LinkedListTraversal(head3);
     return 0;
 }
