@@ -9,99 +9,88 @@ struct ListNode
 };
 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
-    struct ListNode* temp = l1;
-    int p;
-    while(temp!=NULL)
+    struct ListNode* p = l1;
+    struct ListNode* q = l2;
+    int n1,n2,i,j,k,l,sum1,sum2,sum,count,temp,r;
+    n1 = 0;
+    n2 = 0;
+    while(p!=NULL || q!=NULL)
     {
-        p++;
-        temp = temp->next;
-    }
-    int q;
-    temp = l2;
-    while(temp!=NULL)
-    {
-        q++;
-        temp = temp->next;
-    }
-    int i;
-    int* arr = (int*)malloc(p*sizeof(int));
-    temp = l1;
-    for(i = 0;i<p;i++)
-    {
-        arr[i] = temp->val;
-        temp = temp->next;
-    }
-    int sum1 = 0;
-    int x = 1;
-    for(i = p-1;i>=0;i--)
-    {
-        if(i == p-1)
+        if(p!=NULL)
         {
-            sum1 = sum1 + arr[i];
+            n1++;
+            p = p->next;
         }
-        else
+        if(q!=NULL)
         {
-            x = x*10;
-            sum1 = sum1 + (x*arr[i]);
+            n2++;
+            q = q->next;
         }
     }
-    free(arr);
-    temp = l2;
-    int* arr2 = (int*)malloc(q*sizeof(int));
-    for(i = 0;i<q;i++)
+    sum1 = 0;
+    sum2 = 0;
+    p = l1;
+    q = l2;
+    j = 0;
+    l = 0;
+    while(p!=NULL || q!=NULL)
     {
-        arr2[i] = temp->val;
-        temp = temp->next;
-    }
-    int sum2 = 0;
-    x = 1;
-    for(i = q-1;i>=0;i--)
-    {
-        if(i == q-1)
+        if(p!=NULL)
         {
-            sum2 = sum2 + arr2[i];
-        }
-        else
+            temp = 1;
+        for(i = j;i<n1-1;i++)
         {
-            x = x*10;
-            sum2 = sum2 + (x*arr2[i]);
+            temp = temp*10;
+        }
+        sum1 = sum1 + (temp*p->val);
+        j++;
+        p = p->next;
+        }
+        if(q!=NULL)
+        {
+            temp = 1;
+        for(k = l;i<n2-1;k++)
+        {
+            temp = temp*10;
+        }
+        sum2 = sum2 + (temp*q->val);
+        l++;
+        q = q->next;
         }
     }
-
-    int sum = sum1 + sum2;
-    int count = (sum == 0)?1:(log10(sum)+1);
-
+    sum = sum1 + sum2;
+    count = (sum == 0)?1:(log10(sum)+1);
     struct ListNode* l3 = NULL;
-    l3->next = NULL;
-    for(i = 0;i<count;i++)
-    {
-        struct ListNode* temp = (struct ListNode*)malloc(1*sizeof(struct ListNode));
-        temp->next = NULL;
+    i = 0;
+    while(i<count)
+    {   
+        struct ListNode* temp1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+        temp1->next = NULL;
         if(l3 == NULL)
         {
-            l3 = temp;
+            l3 = temp1;
         }
         else
         {
-            struct ListNode* p = l3;
+            p = l3;
             while(p->next!=NULL)
             {
                 p = p->next;
             }
-            p->next = temp;
+            p->next = temp1;
         }
+        i++;
     }
-    temp = l3;
-    int r;
-    for(i = 0;i<count;i++)
+    p = l3;
+    while(sum>0)
     {
-        r = sum%10;
-        temp->val = r;
+        r = sum % 10;
+        p->val = r;
         sum = sum / 10;
-        temp = temp->next;
+        p = p->next;
     }
     return l3;
-}   
+}
 
 int main()
 {
