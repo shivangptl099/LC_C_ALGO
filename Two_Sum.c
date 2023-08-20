@@ -1,35 +1,26 @@
-#include<stdio.h>
-#define size 10
-
-int main(){
-
-    int arr[size];
-    int i,j,num,target,temp1,temp2;
-
-    printf("How Many Elements U Wanna Enter?\n");
-    scanf("%d",&num);
-
-    for(i=0;i<num;i++){
-        printf("Enter The Elements Of Array:\n");
-        scanf("%d",&arr[i]);
-    }
-    printf("Enter The Target:\n");
-    scanf("%d",&target);
-
-    printf("The Entered Elements are:\n");
-    for(i=0;i<num;i++){
-        printf("%d\t",arr[i]);
-    }
-    printf("\n");
-    printf("The Index pair for sum of the target is\n");
-    for(i=0;i<size;i++)
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    *returnSize = numsSize;
+    int i,j,x,y,count;
+    count = 0;
+    for(i= 0;i<numsSize-1;i++)
     {
-        for(j=i+1;j<size;j++){
-            if(arr[i]+arr[j]== target){
-                 printf("[%d,%d]\n",i,j);
-             }
+        for(j=i+1;j<numsSize;j++)
+        {
+            if(nums[j] + nums[i] == target)
+            {
+                x = i;
+                y = j;
+                count++;
+                break;
+            }
         }
     }
-    printf("Thank You\n");
-    return 0;
+    *returnSize = 2;
+    int* ans = (int*)malloc(2*sizeof(int));
+    if(count>0)
+    {
+    ans[0] = x;
+    ans[1] = y;
+    }
+    return ans;
 }
