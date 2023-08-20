@@ -1,78 +1,66 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-struct stack 
+struct stack
 {
     int size;
     int top;
-    char *arr;
+    char* arr;
 };
 
-void push(struct stack *st,char data)
-{
-    st->top ++;
-    st->arr[st->top] = data;
-}
-
-char pop(struct stack *st)
-{   char temp;
-    temp = st->arr[st->top];
-    st->top--;
-    return temp;
-}
-
-int main()
-{
+bool isValid(char * s){
     struct stack st;
+    st.size = strlen(s);
     st.top = -1;
-    st.size = 20;
     st.arr = (char*)malloc(st.size*sizeof(char));
 
-    char s[20];
-    printf("Enter String:\n");
-    scanf("%s",s);
     int i;
     char t;
-    for(i = 0;i<strlen(s);i++)
+    for(i=0;i<strlen(s);i++)
     {
         if(s[i] == '(' || s[i] == '{' || s[i] == '[')
         {
-            push(&st,s[i]);
+            st.top++;
+            st.arr[st.top] = s[i];
         }
-        else if(s[i] == ')')
+        else if(s[i] == ')' || s[i] == '}' || s[i] == ']')
         {
-            t = pop(&st);
-            if(t != '(')
+            if(st.top == -1)
             {
-                printf("The Parantheses Is Not Matched\n");
                 break;
             }
-        }
-        else if(s[i] == '}')
-        {
-            t = pop(&st);
-            if(t != '{')
+            else if(s[i] == ')')
             {
-                printf("The Parantheses Is Not Matched\n");
-                break;
+               t = st.arr[st.top];
+               st.top--;
+               if(t != '(') 
+               {
+                   break;
+               }
             }
-        }
-        else if(s[i] == ']')
-        {
-            t = pop(&st);
-            if(t != '[')
+            else if(s[i] == '}')
             {
-                printf("The Parantheses Is Not Matched\n");
-                break;
+               t = st.arr[st.top];
+               st.top--;
+               if(t != '{') 
+               {
+                   break;
+               }
+            }
+            else if(s[i] == ']')
+            {
+               t = st.arr[st.top];
+               st.top--;
+               if(t != '[') 
+               {
+                   break;
+               }
             }
         }
     }
-
     if(st.top == -1 && i == strlen(s))
     {
-        printf("The Parantheses Is Matched\n");
+        return true;
     }
-    printf("Thank You\n");
-    return 0;
+    else
+    {
+        return false;
+    }
 }
