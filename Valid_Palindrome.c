@@ -1,34 +1,28 @@
-#include<stdio.h>
-#include<malloc.h>
-#include<string.h>
-#include<ctype.h>
-
-int main()
-{
-    char* s = (char*)malloc(sizeof(char));
-    printf("Enter:\n");
-    gets(s);
+bool isPalindrome(char * s){
+    char* s1 = (char*)malloc((strlen(s))*sizeof(char));
     int i,j;
     j = 0;
-    char* s1 = (char*)malloc(sizeof(char));
     for(i = 0;i<strlen(s);i++)
     {
-        if(s[i] >= 'a' && s[i] <= 'z')
+        if(s[i]>64 && s[i]<91)
         {
-            s1[j] = s[i];
+            s1[j] = s[i] + 32;
             j++;
         }
-        if(s[i] >= 'A' && s[i] <= 'Z')
-        {
-            s1[j] = tolower(s[i]);
-            j++;
-        }
-        if(s[i] >= '0' && s[i] <= '9')
+        else if(s[i]>96 && s[i]<123)
         {
             s1[j] = s[i];
             j++;
         }
     }
-    puts(s1);
-    return 0;
+    j = j - 1;
+    for(i = 0;i<j;i++)
+    {
+        if(s[i] != s1[j])
+        {
+            return false;
+        }
+        j--;
+    }
+    return true;
 }
